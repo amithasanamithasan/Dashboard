@@ -1,22 +1,33 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import Navbar from './components/Navbar'
-import HeroSection from './components/HeroSection'
-import TestCards from './components/TestCards'
-import TopBar from './components/TopBar'
-import Sidebar from './components/Sidebar'
+import Home from './components/Home'
+import Layout from './components/Layout'
+import { ThemeProvider } from './context/ThemeContext'
 
 function App() {
+  const [currentPage, setCurrentPage] = useState('Home')
 
+  const renderContent = () => {
+    switch (currentPage) {
+      case 'Home':
+        return <Home />
+      case 'Leaderboard':
+        return <div className="p-6">Leaderboard Component</div>
+      case 'Reports':
+        return <div className="p-6">Reports Component</div>
+      case 'Subscription':
+        return <div className="p-6">Subscription Component</div>
+      default:
+        return <Home />
+    }
+  }
 
   return (
-    <>
-<TopBar/>
- <Sidebar/>
-
-    </>
+    <ThemeProvider>
+      <Layout onPageChange={setCurrentPage}>
+        {renderContent()}
+      </Layout>
+    </ThemeProvider>
   )
 }
 

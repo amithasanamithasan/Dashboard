@@ -8,18 +8,26 @@ import {
   ChevronRight,
   User,
 } from "lucide-react";
+import { ThemeProvider } from "../context/ThemeContext";
 
-const Sidebar = () => {
+const Sidebar = ({ onPageChange }) => {
   const [collapsed, setCollapsed] = useState(false);
+  const [activeItem, setActiveItem] = useState("Home");
 
   const menuItems = [
-    { name: "Home", icon: <Home size={18} />, active: true },
+    { name: "Home", icon: <Home size={18} /> },
     { name: "Leaderboard", icon: <BarChart2 size={18} /> },
     { name: "Reports", icon: <FileText size={18} /> },
     { name: "Subscription", icon: <NotebookText size={18} /> },
   ];
 
+  const handleItemClick = (itemName) => {
+    setActiveItem(itemName);
+    onPageChange(itemName);
+  };
+
   return (
+    <ThemeProvider>
     <div
       className={`flex flex-col justify-between bg-white border-r shadow-sm h-screen transition-all duration-300 ${
         collapsed ? "w-20" : "w-64"
@@ -32,8 +40,9 @@ const Sidebar = () => {
           {menuItems.map((item, index) => (
             <div
               key={index}
-              className={`flex items-center gap-3 text-black px-4 py-2 rounded-lg cursor-pointer  ${
-                item.active && "bg-purple-200 text-black"
+              onClick={() => handleItemClick(item.name)}
+              className={`flex items-center gap-3 text-black px-4 py-2 rounded-lg cursor-pointer hover:bg-purple-100 transition-colors ${
+                activeItem === item.name ? "bg-purple-200 text-black" : ""
               }`}
             >
               {item.icon}
@@ -89,6 +98,7 @@ const Sidebar = () => {
         </button>
       </div>
     </div>
+    </ThemeProvider>
   );
 };
 
