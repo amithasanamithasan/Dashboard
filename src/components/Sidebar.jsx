@@ -1,46 +1,60 @@
 import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import {
   Home,
   BarChart2,
   FileText,
   NotebookText,
-  ChevronLeft,
-  ChevronRight,
-  User,
+  ArrowRightToLineIcon,
+  ArrowLeftToLineIcon,
 } from "lucide-react";
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
-
+ 
   const menuItems = [
-    { name: "Home", icon: <Home size={18} />, active: true },
-    { name: "Leaderboard", icon: <BarChart2 size={18} /> },
-    { name: "Reports", icon: <FileText size={18} /> },
-    { name: "Subscription", icon: <NotebookText size={18} /> },
+    { name: "Home", icon: <Home size={18} />, path: "/" },
+    { name: "Leaderboard", icon: <BarChart2 size={18} />, path: "/leaderboard" },
+    { name: "Reports", icon: <FileText size={18} />, path: "/reports" },
+    { name: "Subscription", icon: <NotebookText size={18} />, path: "/subscription" },
   ];
 
   return (
     <div
-      className={`flex flex-col justify-between bg-white border-r shadow-sm h-screen transition-all duration-300 ${
+      className={`relative flex flex-col justify-between bg-white border-r shadow-sm h-screen transition-all duration-300 ${
         collapsed ? "w-20" : "w-64"
       }`}
     >
+      {/* Collapse Toggle Button */}
+      <button
+        onClick={() => setCollapsed(!collapsed)}
+        className="absolute -right-10 top-80 z-10 border rounded-full shadow-md p-2 bg-white transition"
+      >
+        {collapsed ? (
+          <ArrowRightToLineIcon className="text-purple-500 w-5 h-5" />
+        ) : (
+          <ArrowLeftToLineIcon className="text-purple-500 w-5 h-5" />
+        )}
+      </button>
+
       {/* Top section */}
       <div>
-        {/* Menu Items */}
         <nav className="mt-4 flex flex-col gap-1 px-2">
           {menuItems.map((item, index) => (
-            <div
+            <NavLink
               key={index}
-              className={`flex items-center gap-3 text-black px-4 py-2 rounded-lg cursor-pointer  ${
-                item.active && "bg-purple-200 text-black"
-              }`}
+              to={item.path}
+              className={({ isActive }) =>
+                `flex items-center gap-3 text-black px-4 py-2 rounded-lg cursor-pointer hover:bg-purple-100 transition-colors ${
+                  isActive ? "bg-purple-200 text-black" : ""
+                }`
+              }
             >
               {item.icon}
               {!collapsed && (
                 <span className="text-sm font-medium">{item.name}</span>
               )}
-            </div>
+            </NavLink>
           ))}
         </nav>
       </div>
@@ -49,9 +63,9 @@ const Sidebar = () => {
       <div className="flex flex-col items-center gap-4 px-4 py-4">
         {!collapsed && (
           <div className="text-center text-xs text-gray-700">
-            <p className=" font-bold text-black">New to Exam AI ?</p>
+            <p className="font-bold text-black">New to Exam AI?</p>
             <p className="text-[11px] mb-2">Learn How Exam AI Works</p>
-            <button className="bg-violet-500  text-white text-xs px-4 py-1.5 rounded-full">
+            <button className="bg-violet-500 text-white text-xs px-4 py-1.5 rounded-full">
               View Tutorial
             </button>
           </div>
@@ -70,23 +84,11 @@ const Sidebar = () => {
           />
           {!collapsed && (
             <>
-              <span className="text-sm font-medium text-black  ">James Smith</span>
-              <ChevronRight size={16} />
+              <span className="text-sm font-medium text-black">James Smith</span>
+              <ArrowRightToLineIcon size={20} />
             </>
           )}
         </div>
-
-        {/* Collapse button */}
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          className="absolute right-[1450px] top-[400px]  border rounded-full shadow-md p-2  transition"
-        >
-          {collapsed ? (
-            <ChevronRight className="text-purple-500" size={16} />
-          ) : (
-            <ChevronLeft className="text-purple-500" size={16} />
-          )}
-        </button>
       </div>
     </div>
   );
