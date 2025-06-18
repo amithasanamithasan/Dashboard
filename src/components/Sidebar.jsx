@@ -19,7 +19,7 @@ const Sidebar = ({ onPageChange }) => {
     { name: "Leaderboard", icon: <BarChart2 size={18} />, path: "/leaderboard" },
     { name: "Reports", icon: <FileText size={18} />, path: "/reports" },
     { name: "Subscription", icon: <NotebookText size={18} />, path: "/subscription" },
-
+  ]
   const [activeItem, setActiveItem] = useState("Home");
 
 

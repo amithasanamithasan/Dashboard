@@ -2,8 +2,8 @@ import React from "react";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { GoPersonAdd } from "react-icons/go";
 import { Tally1 } from "lucide-react";
-import ThemeSwitch from "./ThemeSwitch";
-import ThemeSwitch from "./ThemeSwitch";
+
+
 import { ThemeProvider, useTheme } from "../context/ThemeContext";
 const TopBar = () => {
   const theme = useTheme()
