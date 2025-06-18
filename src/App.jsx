@@ -1,23 +1,36 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ThemeProvider from "./context/ThemeContext";
-import Home from "./components/Home";
-import MainLayout from "./components/Layout/MainLayout";
+
+import { useState } from 'react'
+import './App.css'
+import Home from './components/Home'
+import Layout from './components/Layout'
+import { ThemeProvider } from './context/ThemeContext'
 
 function App() {
+  const [currentPage, setCurrentPage] = useState('Home')
+
+  const renderContent = () => {
+    switch (currentPage) {
+      case 'Home':
+        return <Home />
+      case 'Leaderboard':
+        return <div className="p-6">Leaderboard Component</div>
+      case 'Reports':
+        return <div className="p-6">Reports Component</div>
+      case 'Subscription':
+        return <div className="p-6">Subscription Component</div>
+      default:
+        return <Home />
+    }
+  }
+
   return (
-    <BrowserRouter>
-      <ThemeProvider>
-        <Routes>
-          <Route element={<MainLayout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/leaderboard" element={<div className="text-center"><p className="text-2xl text-amber-500 font-semibold">Leaderboard Page</p></div>} />
-            <Route path="/reports" element={<div className="text-center"><p className="text-2xl text-amber-500 font-semibold">Reports Page</p></div>} />
-            <Route path="/subscription" element={<div className="text-center"><p className="text-2xl text-amber-500 font-semibold">Subscription Page</p></div>} />
-          </Route>
-        </Routes>
-      </ThemeProvider>
-    </BrowserRouter>
-  );
+    <ThemeProvider>
+      <Layout onPageChange={setCurrentPage}>
+        {renderContent()}
+      </Layout>
+    </ThemeProvider>
+  )
+
 }
 
 export default App;

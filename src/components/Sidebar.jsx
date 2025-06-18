@@ -8,18 +8,29 @@ import {
   ArrowRightToLineIcon,
   ArrowLeftToLineIcon,
 } from "lucide-react";
+import { ThemeProvider } from "../context/ThemeContext";
 
-const Sidebar = () => {
+const Sidebar = ({ onPageChange }) => {
   const [collapsed, setCollapsed] = useState(false);
+
  
   const menuItems = [
     { name: "Home", icon: <Home size={18} />, path: "/" },
     { name: "Leaderboard", icon: <BarChart2 size={18} />, path: "/leaderboard" },
     { name: "Reports", icon: <FileText size={18} />, path: "/reports" },
     { name: "Subscription", icon: <NotebookText size={18} />, path: "/subscription" },
-  ];
+
+  const [activeItem, setActiveItem] = useState("Home");
+
+
+
+  const handleItemClick = (itemName) => {
+    setActiveItem(itemName);
+    onPageChange(itemName);
+  };
 
   return (
+    <ThemeProvider>
     <div
       className={`relative flex flex-col justify-between bg-white border-r shadow-sm h-screen transition-all duration-300 ${
         collapsed ? "w-20" : "w-64"
@@ -43,12 +54,12 @@ const Sidebar = () => {
           {menuItems.map((item, index) => (
             <NavLink
               key={index}
-              to={item.path}
-              className={({ isActive }) =>
-                `flex items-center gap-3 text-black px-4 py-2 rounded-lg cursor-pointer hover:bg-purple-100 transition-colors ${
-                  isActive ? "bg-purple-200 text-black" : ""
-                }`
-              }
+
+              onClick={() => handleItemClick(item.name)}
+              className={`flex items-center gap-3 text-black px-4 py-2 rounded-lg cursor-pointer hover:bg-purple-100 transition-colors ${
+                activeItem === item.name ? "bg-purple-200 text-black" : ""
+              }`}
+
             >
               {item.icon}
               {!collapsed && (
@@ -91,6 +102,7 @@ const Sidebar = () => {
         </div>
       </div>
     </div>
+    </ThemeProvider>
   );
 };
 
