@@ -11,7 +11,7 @@ const MainLayout = () => {
       <main>
         <Outlet />
       </main>
-      <div className="relative -top-38">
+      <div className="">
         <Sidebar />
       </div>
     </div>

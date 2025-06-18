@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
 import {
   Home,
   BarChart2,
@@ -52,20 +51,18 @@ const Sidebar = ({ onPageChange }) => {
       <div>
         <nav className="mt-4 flex flex-col gap-1 px-2">
           {menuItems.map((item, index) => (
-            <NavLink
+            <div
               key={index}
-
               onClick={() => handleItemClick(item.name)}
               className={`flex items-center gap-3 text-black px-4 py-2 rounded-lg cursor-pointer hover:bg-purple-100 transition-colors ${
                 activeItem === item.name ? "bg-purple-200 text-black" : ""
               }`}
-
             >
               {item.icon}
               {!collapsed && (
                 <span className="text-sm font-medium">{item.name}</span>
               )}
-            </NavLink>
+            </div>
           ))}
         </nav>
       </div>
